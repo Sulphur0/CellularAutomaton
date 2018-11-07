@@ -25,4 +25,5 @@ public class Cell {
     }
 
     public boolean isPopulated() { return populated; }
+    public void setPopulated(boolean b) { populated = b; }
 }

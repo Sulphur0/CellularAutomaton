@@ -1,5 +1,7 @@
 package com.sulphur.cellautomaton.system;
 
+import java.util.Arrays;
+
 public class Population {
     Cell[] cells;
     private int width;
