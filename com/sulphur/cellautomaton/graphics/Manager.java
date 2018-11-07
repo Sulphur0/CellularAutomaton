@@ -5,6 +5,7 @@ public class Manager implements Runnable {
     private Thread        thread;
     private Window        window;
     private Renderer      renderer;
+    private Input         input;
     private AbstractRules rules;
 
     private int    width  = 75;
@@ -22,6 +23,7 @@ public class Manager implements Runnable {
     public void start(){
         window = new Window(this);
         renderer = new Renderer(this);
+        input = new Input(this);
 
         thread = new Thread(this);
         thread.run();
@@ -55,6 +57,7 @@ public class Manager implements Runnable {
                 _render = true;
 
                 rules.update(this, (float) _firstTime);
+                input.update();
             }
 
             if(_render){
@@ -84,4 +87,5 @@ public class Manager implements Runnable {
     public float getScale() { return scale; }
     public String getTitle() {return title; }
     public Window getWindow() {return window; }
+    public Input getInput() { return input; }
 }
