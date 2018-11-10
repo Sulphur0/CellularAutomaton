@@ -15,9 +15,7 @@ public class Population {
         this.width = width;
         this.height = height;
         cells = new Cell[width * height];
-        for(int i = 0 ; i< cells.length; i++){
-            this.cells[i] = new Cell((int)Math.round(Math.random()) == 1);
-        }
+        regenerate();
         while(B > 0){
             Br.add(B % 10);
             B /= 10;
@@ -25,6 +23,9 @@ public class Population {
         while(S > 0){
             Sr.add(S % 10);
             S /= 10;
+        }
+        if(S == 0) {
+            Sr.add(0);
         }
     }
 
@@ -47,6 +48,12 @@ public class Population {
             for(int x = 0; x < width; x++){
                 cells[x + y * width].updateCell(this);
             }
+        }
+    }
+
+    public void regenerate(){
+        for(int i = 0 ; i< cells.length; i++){
+            this.cells[i] = new Cell((int)Math.round(Math.random()) == 1);
         }
     }
 }

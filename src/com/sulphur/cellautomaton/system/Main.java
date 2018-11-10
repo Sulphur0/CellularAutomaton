@@ -4,32 +4,27 @@ import com.sulphur.cellautomaton.graphics.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class Main extends AbstractRules {
 
     private boolean freeze = false;
-    private boolean dark = true;
+    private boolean dark = false;
 
-    private final static int WIDTH = 125;
-    private final static int HEIGHT = 85;
-    private final static float SCALE = 6.0f;
+    private static int WIDTH;
+    private static int HEIGHT;
+    private static float SCALE;
+
+    private static int RULESETB;
+    private static int RULESETS;
 
     private Input in;
 
-    /*
-    nice patterns:
-        B1357/S1357     -> replicator
-        B2/S            -> seeds
-        B2/S0           -> Live Free Or Die
-        B3/S012345678   -> Life w/o death
-        B3/S12          -> flock
-        B3/S12345       -> maze
-        B3/S23          -> GOL
-        B36/S125        -> 2x2
-        B368/S245       -> Move
-        B38/S23         -> Pedestrian
-    */
-    private Population p = new Population(WIDTH,HEIGHT,3,23);
+    private static Population p;
 
 
     @Override
@@ -59,6 +54,9 @@ public class Main extends AbstractRules {
         if(freeze || in.isKeyDown(KeyEvent.VK_X)){
             p.updatePopulationState();
         }
+        if(in.isKeyDown(KeyEvent.VK_R)) {
+            p.regenerate();
+        }
     }
 
     @Override
@@ -82,8 +80,28 @@ public class Main extends AbstractRules {
         }
     }
 
+    public Main(){
+        try {
+            List<String> instructions = Files.readAllLines(Paths.get("/home/default/IdeaProjects/untitled/src/com/sulphur/cellautomaton/system/instructions.txt"), StandardCharsets.UTF_8);
+            WIDTH = Integer.parseInt(instructions.get(0));
+            HEIGHT = Integer.parseInt(instructions.get(1));
+            SCALE = Float.parseFloat(instructions.get(2));
+            RULESETB = Integer.parseInt(instructions.get(3));
+            RULESETS = Integer.parseInt(instructions.get(4));
+        } catch(IOException e) {
+            System.out.println("Couldn't find instructions, reverting to defaults");
+            WIDTH = 125;
+            HEIGHT = 85;
+            SCALE = 2.0f;
+            RULESETB = 3;
+            RULESETS = 12345;
+        }
+    }
+
     public static void main(String[] args){
+
         Manager manager = new Manager(new Main(),WIDTH,HEIGHT,SCALE);
+        p = new Population(WIDTH,HEIGHT,RULESETB,RULESETS);
         manager.start();
     }
 }

@@ -1,0 +1,19 @@
+40
+40
+10.0
+36
+23
+//////////////////////////////////////
+        B1357/S1357     -> replicator
+        B1357/S24680    -> re-re-replicator
+        B1/S012345678   -> fractals
+        B2/S            -> seeds
+        B2/S0           -> Live Free Or Die
+        B3/S012345678   -> Life w/o death
+        B3/S12          -> flock
+        B3/S12345       -> maze
+        B36/S23         -> GOL + replicator
+        B3/S23          -> GOL
+        B36/S125        -> 2x2
+        B368/S245       -> Move
+        B38/S23         -> Pedestrian
